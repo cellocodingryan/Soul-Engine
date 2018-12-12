@@ -22,6 +22,11 @@ public:
 	bool operator==(const RingBuffer& other);
 	bool operator==(RingBuffer& other);
 
+	T& PopFront();
+
+	T& PopBack();
+
+
 	const T& Back() const;
 
 	const T& Front();
@@ -69,7 +74,7 @@ inline bool RingBuffer<T, Capacity>::operator==(const RingBuffer & other)
 		return false;
 	}
 	for (int i = 0; i < this->size_; ++i) {
-		if (this->data_[i] != other.data_[i]) return false
+		if (this->data_[i] != other.data_[i]) return false;
 	}
 	return true;
 }
@@ -81,10 +86,20 @@ inline bool RingBuffer<T, Capacity>::operator==(RingBuffer & other)
 		return false;
 	}
 	for (int i = 0; i < this->size_; ++i) {
-		if (this->data_[i] != other.data_[i]) return false
+		if (this->data_[i] != other.data_[i]) return false;
 	}
 	return true;
 }
+
+template<typename T, std::size_t Capacity>
+inline T & RingBuffer<T, Capacity>::PopFront()
+{
+	T& tmp = front_;
+	front_ = (front_ + size_ + 1) % size_;
+	return 
+	// TODO: insert return statement here
+}
+
 
 template<typename T, std::size_t Capacity>
 inline const T & RingBuffer<T, Capacity>::Back() const
